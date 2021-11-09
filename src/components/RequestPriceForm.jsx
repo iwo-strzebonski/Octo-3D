@@ -35,7 +35,7 @@ export default class RequestPriceForm extends React.Component {
                             return filament.material === e.target.value
                         }).color
                     })}
-                    required='true'
+                    required={true}
                 >
                     {[...new Set(this.props.filaments.map(filament => {
                         return <option>{filament.material}</option>
@@ -44,25 +44,22 @@ export default class RequestPriceForm extends React.Component {
                 <select
                     name='color'
                     onChange={e => this.props.changeState({color: e.target.value})}
-                    required='true'
+                    required={true}
                 >
                     {this.props.filaments.filter(filament => {
                         return filament.material === this.props.material
-                    }).map(filament => {
-                        return <option selected>{filament.color}</option>
+                    }).map((filament, i) => {
+                        return <option>{filament.color}</option>
                     })}
                 </select>
                 <select
                     name='currency'
                     onChange={e => document.cookie = `CLIENT_CURRENCY=${e.target.value}`}
-                    required='true'
+                    required={true}
+                    defaultValue={this.getCookie('CLIENT_CURRENCY')}
                 >
                     {this.props.currencies.map(curr => {
-                        if (curr === this.getCookie('CLIENT_CURRENCY')) {
-                            return <option selected>{curr}</option>
-                        } else {
-                            return <option>{curr}</option>
-                        }
+                        return <option>{curr}</option>
                     })}
                 </select>
                 <input
@@ -80,9 +77,10 @@ export default class RequestPriceForm extends React.Component {
                 <select
                     name='quality'
                     onChange={e => this.props.changeState({quality: e.target.value})}
+                    defaultValue='normal'
                 >
                     <option value='high'>High quality (+50%)</option>
-                    <option selected value='normal'>Normal quality</option>
+                    <option value='normal'>Normal quality</option>
                     <option value='low'>Low quality (-25%)</option>
                 </select>
                 <input type='submit' value='Calculate price' />

@@ -2,7 +2,7 @@ import React from 'react'
 import ActivityIndicator from './ActivityIndicator'
 
 import axios from 'axios'
-// import localIpUrl from 'local-ip-url'
+import localIpUrl from 'local-ip-url'
 
 import BuyForm from './BuyForm'
 import RequestPriceForm from './RequestPriceForm'
@@ -26,6 +26,7 @@ export default class Pricing extends React.Component {
     }
 
     componentDidMount() {
+        console.log(localIpUrl('public'))
         if (!this.getCookie('CLIENT_CURRENCY')) {
             // axios.post(this.api + 'location', { location: localIpUrl('public') })
             axios
