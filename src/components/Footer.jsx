@@ -11,7 +11,7 @@ export default class Header extends React.Component {
     render() {
         return (
             <footer className='App-footer'>
-                <span>&copy; Iwo Strzeboński {(new Date()).getUTCFullYear()}</span>
+                <span>&copy; Octo-3D {(new Date()).getUTCFullYear()}</span>
             </footer>
         )
     }
