@@ -6,8 +6,16 @@ const fileUpload = require('express-fileupload')
 const cookieParser = require('cookie-parser')
 const parser = require('xml-js')
 const fs = require('fs')
-
+const nodemailer = require('nodemailer')
 const isoCountry = require('iso-country-currency')
+
+// https://nodemailer.com/about/
+
+/*
+ * SMTP: smtp.octo-3d.tech
+ * user: noreply@octo-3d.tech
+ * password: RY@)cVu0
+ */
 
 const { MongoClient } = require('mongodb')
 const { CuraWASM } = require('cura-wasm')

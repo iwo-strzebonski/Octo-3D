@@ -19,6 +19,7 @@
     "express-fileupload": "^1.2.1",
     "iso-country-currency": "^0.5.3",
     "mongodb": "^4.1.4",
+    "nodemailer": "^6.7.0",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
