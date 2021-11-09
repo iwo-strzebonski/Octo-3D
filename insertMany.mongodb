@@ -1,0 +1,9 @@
+use('octo-3d')
+
+db.getCollection('filaments').drop()
+
+db.getCollection('filaments').insertMany([
+    { 'material': 'PLA PRO', 'color': 'Cold White', 'price': 20, 'weight': 1000, 'density': 1.25 },
+    { 'material': 'PET-G', 'color': 'Transparent', 'price': 20, 'weight': 1000, 'density': 1.23 },
+    // { 'material': 'PET-G', 'color': 'Ruby', 'price': 20, 'weight': 1000, 'density': 1.23 }
+])
