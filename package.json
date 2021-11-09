@@ -1,0 +1,47 @@
+{
+    "name": "octo-3d",
+    "version": "0.1.0",
+    "dependencies": {
+        "@babel/core": "^7.13.0",
+        "axios": "^0.24.0",
+        "eslint": "^7.11.0",
+        "local-ip-url": "^1.0.3",
+        "react": "^17.0.2",
+        "react-currency-conversion": "^1.0.5",
+        "react-dom": "^17.0.2",
+        "react-phone-number-input": "^3.1.35",
+        "react-scripts": "4.0.3",
+        "web-vitals": "^1.1.2"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@types/exchange-rates-api": "^1.0.0",
+        "@types/react": "^17.0.34",
+        "glob-parent": "^6.0.2",
+        "immer": "^9.0.6",
+        "react-router": "^6.0.0",
+        "react-router-dom": "^6.0.0",
+        "set-value": "^4.1.0"
+    }
+}

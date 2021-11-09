@@ -1,0 +1,75 @@
+.App-main {
+    background-color: lightgray;
+    margin: 0 auto;
+    color: black;
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.App-main * {
+    margin: 0.25rem 0.5rem;
+}
+
+.contact-form,
+.buy-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-form input,
+.buy-form input {
+    margin: 0.25rem;
+    width: 16rem;
+    font-size: 1rem;
+}
+
+.PhoneInputCountry {
+    margin: 0 0.25rem 0 0;
+}
+
+.contact-form .PhoneInputInput {
+    width: 12rem;
+}
+
+.buy-form .PhoneInputInput {
+    width: 12rem;
+}
+
+.contact-form textarea {
+    height: 8rem;
+}
+
+@media (max-width: 960px) {
+    .App-main {
+        width: 100vw;
+    }
+}
+
+@media (min-width: 961px) {
+    .App-main {
+        width: 960px;
+    }
+}
+
+@media (max-width: 570px) {
+    .contact-form textarea {
+        width: 16rem;
+    }
+}
+
+@media (min-width: 571px) {
+    .contact-form textarea {
+        width: 24rem;
+    }
+}
+
+.gallery-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-item > * {
+    margin: 1rem 0;
+}

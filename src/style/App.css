@@ -1,0 +1,14 @@
+.App {
+    display: grid;
+    grid-template-columns: 1fr; 
+    grid-template-rows: min-content 1fr min-content;
+    gap: 0px 0px;
+    height: 100vh;
+    text-align: center;
+    background-color: #333842;
+    flex-direction: column;
+}
+
+.App-link {
+    color: #61dafb;
+}

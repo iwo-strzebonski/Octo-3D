@@ -1,0 +1,78 @@
+.App-header {
+    background-color: #282c34;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.App-logo {
+    display: block;
+    width: 4rem;
+    user-select: none;
+}
+
+.App-logo img {
+    width: 4rem;
+    height: 4rem;
+}
+
+.header-nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header-nav ul li a {
+    color: white;
+    transition: color cubic-bezier(0.165, 0.84, 0.44, 1) 0.5s;
+}
+
+.header-nav ul li a:hover,
+.header-nav ul li a:focus {
+    color: gray;
+}
+
+.header-nav ul li a:not(:hover) {
+    color: white;
+}
+
+.App-header a {
+    height: 4rem;
+}
+
+@media (min-width: 381px) {
+    .App-header {
+        height: 4rem;
+        display: inline-flex;
+    }
+    
+    .header-nav {
+        height: 4rem;
+    }
+    
+    .header-nav ul {
+        width: calc(100vw - 4rem);
+        height: inherit;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .header-nav ul li a {
+        line-height: 4rem;
+    }
+
+    .header-nav ul {
+        display: inline-flex;
+    }
+}
+
+@media (max-width: 380px) {
+    .App-header {
+        display: flex;
+        flex-direction: column;
+        padding: 0.5rem 0;
+    }
+}

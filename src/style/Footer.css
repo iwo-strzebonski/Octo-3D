@@ -1,0 +1,8 @@
+.App-footer {
+    background-color: #282c34;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 1.5rem;
+    color: white;
+}
