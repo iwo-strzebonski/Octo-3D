@@ -40,8 +40,10 @@ app.get('/:site', async(req, res) => {
     res.redirect('/')
 })
 
+
 app.post('/api/:site', async(req, res) => {
-    let url
+    let url, transporter, file, fileName, data
+
     switch (req.params.site) {
     case 'filaments':
     case 'opinions':
@@ -68,17 +70,8 @@ app.post('/api/:site', async(req, res) => {
         })
         break
 
-    case 'gallery':
-        client.connect(() => {
-            const collection = client.db(DATABASE).collection('opinions')
-            collection.find({}).toArray((err, opinions) => {
-                res.send(opinions)
-            })
-        })
-        break
-
     case 'contact':
-        const transporter = nodemailer.createTransport({
+        transporter = nodemailer.createTransport({
             host: EMAIL_SMTP,
             port: EMAIL_PORT,
             secure: false,
@@ -100,7 +93,8 @@ app.post('/api/:site', async(req, res) => {
             subject: `Contact ${(new Date).toISOString()}`,
             html: (
                 `<main>${req.body.message}</main>`
-                + '<br /><address style="font-style: oblique">'
+                + '<br />'
+                + '<br /><address style="font-style: oblique; border-top: 1px solid black">'
                 + `${req.body.name}`
                 + `<br />Email address: ${req.body.email}`
                 + `<br />Phone number: ${req.body.phone}`
@@ -110,7 +104,7 @@ app.post('/api/:site', async(req, res) => {
         break
 
     case 'printing':
-        const transporter = nodemailer.createTransport({
+        transporter = nodemailer.createTransport({
             host: EMAIL_SMTP,
             port: EMAIL_PORT,
             secure: false,
@@ -126,9 +120,9 @@ app.post('/api/:site', async(req, res) => {
             }
         })
 
-        const fileName = `${req.files.upload.name}-${Date.now().toString()}.stl`
+        fileName = `${Date.now().toString()}-${req.files.stl.name}`
         await req.files.stl.mv('./tmp/' + fileName)
-        const file = fs.readFileSync('./tmp/' + fileName).buffer
+        file = fs.readFileSync('./tmp/' + fileName)
 
         await transporter.sendMail({
             from: `"${req.body.name}" <noreply@octo-3d.tech>`,
@@ -137,17 +131,19 @@ app.post('/api/:site', async(req, res) => {
             html: (
                 `<main>`
                 + `Material: <b>${req.body.material}</b>`
-                + `Color: <b>${req.body.color}</b>`
-                + `Quality: <b>${req.body.quality}</b>`
-                + `Price: <b>${req.body.price}</b>`
+                + `<br />Color: <b>${req.body.color}</b>`
+                + `<br />Quality: <b>${req.body.quality}</b>`
+                + `<br />Price: <b>${req.body.price} USD</b>`
                 + '</main>'
-                + '<br /><address style="font-style: oblique">'
+                + '<br />'
+                + '<br /><address style="font-style: oblique; border-top: 1px solid black">'
                 + `${req.body.name}`
                 + `<br />Email address: ${req.body.email}`
                 + `<br />Phone number: ${req.body.phone}`
-                + `<br />Street address: ${req.body.street}`
-                + `<br />State: ${req.body.state}`
+                + `<br />Street address:<br />${req.body.street}`
+                + `<br />City: ${req.body.city}`
                 + `<br />Country: ${req.body.country}`
+                + `<br />State: ${req.body.state}`
                 + `<br />Postal/ZIP code: ${req.body.postal}`
                 + '</address>'
             ),
@@ -157,16 +153,15 @@ app.post('/api/:site', async(req, res) => {
                     content: file
                 }
             ]
-        }).then(res.send())
+        })
         
         fs.unlinkSync('./tmp/' + fileName)
         res.redirect('/')
         break
 
     case 'location':
-        const clientIP = req.ip.slice(req.ip.lastIndexOf(':') + 1)
-        url = 'http://ip-api.com/json/' + clientIP
-        const data = (await axios.get(url)).data
+        url = 'http://ip-api.com/json/' + req.ip.slice(req.ip.lastIndexOf(':') + 1)
+        data = (await axios.get(url)).data
         if (data.status === 'fail') {
             res.send({ currency: 'USD' })
         } else {
@@ -190,9 +185,9 @@ app.post('/api/:site', async(req, res) => {
         break
     
     case 'slice':
-        const fileName = `${Date.now().toString()}.stl`
+        fileName = `${Date.now().toString()}.stl`
         await req.files.stl.mv('./tmp/' + fileName)
-        const file = fs.readFileSync('./tmp/' + fileName).buffer
+        file = fs.readFileSync('./tmp/' + fileName).buffer
         const slicer = new CuraWASM({
             definition: resolveDefinition('creality_ender5'),
             /*
