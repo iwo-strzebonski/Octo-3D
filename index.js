@@ -107,9 +107,15 @@ app.post('/api/:site', async(req, res) => {
             from: `"${req.body.name}" <noreply@octo-3d.tech>`,
             to: 'octoturge@octo-3d.tech',
             subject: `Contact ${(new Date).toISOString()}`,
-            text: req.body.message,
-            html: `<address>${req.body.name}<br />Email address: ${req.body.email}<br />Phone number: ${req.body.phone}</address>`
-        }).catch(e => console.log(e))
+            html: (
+                `<main>${req.body.message}</main>`
+                + '<br /><address style="font-style: oblique">'
+                + `${req.body.name}`
+                + `<br />Email address: ${req.body.email}`
+                + `<br />Phone number: ${req.body.phone}`
+                + '</address>'
+            )
+        }).then(res.send())
         break
 
     case 'location':
