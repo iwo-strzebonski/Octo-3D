@@ -94,19 +94,17 @@ app.post('/api/:site', async(req, res) => {
             auth: {
                 user: EMAIL_USER,
                 pass: EMAIL_PASS
-            }
-        })
-
-        transporter.verify(function (error, success) {
-            if (error) {
-                console.log(error)
-            } else {
-                console.log("Server is ready to take our messages")
+            },
+            tls: {
+                rejectUnauthorized: false,
+                secure: false,
+                ignoreTLS: true,
+                minVersion: 'TLSv1'
             }
         })
 
         await transporter.sendMail({
-            from: `"${req.body.name}" <${req.body.email}`,
+            from: `"${req.body.name}" <noreply@octo-3d.tech>`,
             to: 'octoturge@octo-3d.tech',
             subject: `Contact ${(new Date).toISOString()}`,
             text: req.body.message,
