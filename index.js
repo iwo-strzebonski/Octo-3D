@@ -9,15 +9,6 @@ const fs = require('fs')
 const nodemailer = require('nodemailer')
 const isoCountry = require('iso-country-currency')
 
-// https://nodemailer.com/about/
-
-/*
- * SMTP: smtp.octo-3d.tech
- * SMTP port: 587
- * user: noreply@octo-3d.tech
- * pass: RY@)cVu0
- */
-
 const { MongoClient } = require('mongodb')
 const { CuraWASM } = require('cura-wasm')
 const {resolveDefinition} = require('cura-wasm-definitions')
