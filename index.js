@@ -21,9 +21,10 @@ const { MongoClient } = require('mongodb')
 const { CuraWASM } = require('cura-wasm')
 const {resolveDefinition} = require('cura-wasm-definitions')
 
-const PASSWORD = process.env.PASSWORD || 'M9e246aCTbGFehu'
-const DATABASE = process.env.DATABASE || 'octo-3d'
-const uri = `mongodb+srv://octoturge:${PASSWORD}@is-cluster.e35vu.mongodb.net/${DATABASE}?retryWrites=true&w=majority`
+const PASSWORD = process.env.PASSWORD
+const DATABASE = process.env.DATABASE
+const CLUSTER = process.env.CLUSTER
+const uri = `mongodb+srv://octoturge:${PASSWORD}@${CLUSTER}/${DATABASE}?retryWrites=true&w=majority`
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const app = express()
@@ -72,7 +73,6 @@ app.post('/api/:site', async(req, res) => {
     case 'location':
         const clientIP = req.ip.slice(req.ip.lastIndexOf(':') + 1)
         url = 'http://ip-api.com/json/' + clientIP
-        // url = 'http://ip-api.com/json/89.70.226.140'
         const data = (await axios.get(url)).data
         if (data.status === 'fail') {
             res.send({ currency: 'USD' })
