@@ -34,6 +34,23 @@ const EMAIL_PASS = process.env.EMAIL_PASS
 const uri = `mongodb+srv://octoturge:${PASSWORD}@${CLUSTER}/${DATABASE}?retryWrites=true&w=majority`
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
+const transporter = nodemailer.createTransport({
+    host: EMAIL_SMTP,
+    port: EMAIL_PORT,
+    secure: false,
+    auth: {
+        user: EMAIL_USER,
+        pass: EMAIL_PASS
+    },
+    tls: {
+        rejectUnauthorized: false,
+        secure: false,
+        ignoreTLS: true,
+        minVersion: 'TLSv1'
+    }
+})
+
+
 const app = express()
 
 app.set('trust proxy', true)
@@ -87,22 +104,6 @@ app.post('/api/:site', async(req, res) => {
         break
 
     case 'contact':
-        const transporter = nodemailer.createTransport({
-            host: EMAIL_SMTP,
-            port: EMAIL_PORT,
-            secure: false,
-            auth: {
-                user: EMAIL_USER,
-                pass: EMAIL_PASS
-            },
-            tls: {
-                rejectUnauthorized: false,
-                secure: false,
-                ignoreTLS: true,
-                minVersion: 'TLSv1'
-            }
-        })
-
         await transporter.sendMail({
             from: `"${req.body.name}" <noreply@octo-3d.tech>`,
             to: 'octoturge@octo-3d.tech',
@@ -116,6 +117,44 @@ app.post('/api/:site', async(req, res) => {
                 + '</address>'
             )
         }).then(res.send())
+        break
+
+    case 'printing':
+        const fileName = `${req.files.upload.name}-${Date.now().toString()}.stl`
+        await req.files.stl.mv('./tmp/' + fileName)
+        const file = fs.readFileSync('./tmp/' + fileName).buffer
+
+        await transporter.sendMail({
+            from: `"${req.body.name}" <noreply@octo-3d.tech>`,
+            to: 'octoturge@octo-3d.tech',
+            subject: `Request file printing ${(new Date).toISOString()}`,
+            html: (
+                `<main>`
+                + `Material: <b>${req.body.material}</b>`
+                + `Color: <b>${req.body.color}</b>`
+                + `Quality: <b>${req.body.quality}</b>`
+                + `Price: <b>${req.body.price}</b>`
+                + '</main>'
+                + '<br /><address style="font-style: oblique">'
+                + `${req.body.name}`
+                + `<br />Email address: ${req.body.email}`
+                + `<br />Phone number: ${req.body.phone}`
+                + `<br />Street address: ${req.body.street}`
+                + `<br />State: ${req.body.state}`
+                + `<br />Country: ${req.body.country}`
+                + `<br />Postal/ZIP code: ${req.body.postal}`
+                + '</address>'
+            ),
+            attachments: [
+                {
+                    filename: fileName,
+                    content: file
+                }
+            ]
+        }).then(res.send())
+        
+        fs.unlinkSync('./tmp/' + fileName)
+        res.redirect('/')
         break
 
     case 'location':
