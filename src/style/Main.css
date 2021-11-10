@@ -11,6 +11,24 @@
     margin: 0.25rem 0.5rem;
 }
 
+.App-h1 {
+    margin: 0;
+    padding: 1rem;
+    text-decoration: underline double;
+    background-color: darkslategray;
+}
+
+.App-h2 {
+    margin: 0;
+    padding: 0.5rem;
+    background-color: slategray;
+    color: silver;
+}
+
+.App-content {
+    padding: 1rem 2rem;
+}
+
 .gallery-item {
     display: flex;
     flex-direction: column;

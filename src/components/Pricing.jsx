@@ -20,7 +20,8 @@ export default class Pricing extends React.Component {
             material: '',
             color: '',
             quality: 'normal',
-            price: 0
+            price: 0,
+            printRequested: -1
         }
     }
 
@@ -100,6 +101,10 @@ export default class Pricing extends React.Component {
     render() {
         return (
             <main className='App-main'>
+                {this.state.isSlicePending
+                    ? <ActivityIndicator />
+                    : null
+                }
                 <RequestPriceForm
                     changeState={this.changeState.bind(this)}
                     checkFile={this.checkFile.bind(this)}
@@ -109,20 +114,20 @@ export default class Pricing extends React.Component {
                     currencies={this.state.currencies}
                     quality={this.state.quality}
                 />
-                {this.state.isSlicePending
-                    ? <ActivityIndicator />
-                    : null
-                }
                 {this.state.price !== 0
-                    ? <div>
-                        <BuyForm
+                    ? this.state.printRequested > -1
+                        ? <div>{this.state.printRequested === 1
+                            ? 'You have successfully ordered a 3D print!'
+                            : 'There was a problem with your order. Try again later...'
+                        }</div>
+                        : <BuyForm
+                            changeState={this.changeState.bind(this)}
                             material={this.state.material}
                             color={this.state.color}
                             quality={this.state.quality}
                             price={this.state.price}
                             file={this.state.file}
-                        /> 
-                    </div>
+                        />
                     : null
                 }
             </main>

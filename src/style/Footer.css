@@ -1,5 +1,6 @@
 .App-footer {
     background-color: #282c34;
+    padding: 0.25rem 0;
     display: inline-flex;
     align-items: center;
     justify-content: space-evenly;

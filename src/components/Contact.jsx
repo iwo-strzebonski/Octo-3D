@@ -39,7 +39,7 @@ export default class Contact extends React.Component {
                 {this.state.success > -1
                     ? <h3>{this.state.success === 1
                         ? 'Your message has successfully sent!'
-                        : 'A problem occured when sending your message. We are sorry for the inconvenience.'
+                        : 'A problem occured while sending your message. We are sorry for the inconvenience.'
                     }</h3>
                     : null
                 }
@@ -73,7 +73,7 @@ export default class Contact extends React.Component {
                         placeholder='Your message...'
                         required={true}
                     ></textarea>
-                    <input type='submit' name='submit' value='Submit contact form'/>
+                    <input type='submit' name='submit' value='Submit contact form' />
                 </form>
             </main>
         )

@@ -43,7 +43,11 @@ export default class BuyForm extends React.Component {
         data.append('postal', this.state.postal)
         axios
             .post(this.api + 'printing', data)
-            .catch(() => console.error('Connection error'))
+            .then(() => this.props.changeState({printRequested: 1}))
+            .catch(() => {
+                this.props.changeState({printRequested: -1})
+                console.error('Connection error')
+            })
     }
 
     render() {
