@@ -70,6 +70,15 @@ app.post('/api/:site', async(req, res) => {
         })
         break
 
+    case 'gallery':
+        client.connect(() => {
+            const collection = client.db(DATABASE).collection('opinions')
+            collection.find({}).toArray((err, opinions) => {
+                res.send(opinions)
+            })
+        })
+        break
+
     case 'location':
         const clientIP = req.ip.slice(req.ip.lastIndexOf(':') + 1)
         url = 'http://ip-api.com/json/' + clientIP
