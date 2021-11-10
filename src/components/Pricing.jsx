@@ -28,7 +28,7 @@ export default class Pricing extends React.Component {
         if (!this.getCookie('CLIENT_CURRENCY')) {
             axios
                 .post(this.api + 'location')
-                .then(result => document.cookie = `CLIENT_CURRENCY=${result.data.currency}`)
+                .then(result => document.cookie = `CLIENT_CURRENCY=${result.data.currency}; SameSite=Lax`)
                 .catch(() => console.error('Connection error'))
         }
         axios.post(this.api + 'filaments')
