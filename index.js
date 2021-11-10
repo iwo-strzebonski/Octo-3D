@@ -13,8 +13,9 @@ const isoCountry = require('iso-country-currency')
 
 /*
  * SMTP: smtp.octo-3d.tech
+ * SMTP port: 587
  * user: noreply@octo-3d.tech
- * password: RY@)cVu0
+ * pass: RY@)cVu0
  */
 
 const { MongoClient } = require('mongodb')
@@ -24,11 +25,16 @@ const {resolveDefinition} = require('cura-wasm-definitions')
 const PASSWORD = process.env.PASSWORD
 const DATABASE = process.env.DATABASE
 const CLUSTER = process.env.CLUSTER
+const PORT = process.env.PORT
+const EMAIL_SMTP = process.env.EMAIL_SMTP
+const EMAIL_PORT = process.env.EMAIL_PORT
+const EMAIL_USER = process.env.EMAIL_USER
+const EMAIL_PASS = process.env.EMAIL_PASS
+
 const uri = `mongodb+srv://octoturge:${PASSWORD}@${CLUSTER}/${DATABASE}?retryWrites=true&w=majority`
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const app = express()
-const PORT = process.env.PORT || 25565
 
 app.set('trust proxy', true)
 
@@ -47,10 +53,11 @@ app.post('/api/:site', async(req, res) => {
     let url
     switch (req.params.site) {
     case 'filaments':
+    case 'opinions':
         client.connect(() => {
-            const collection = client.db(DATABASE).collection('filaments')
-            collection.find({}).toArray((err, filaments) => {
-                res.send(filaments)
+            const collection = client.db(DATABASE).collection(req.params.site)
+            collection.find({}).toArray((err, data) => {
+                res.send(data)
             })
         })
         break
@@ -76,6 +83,26 @@ app.post('/api/:site', async(req, res) => {
             collection.find({}).toArray((err, opinions) => {
                 res.send(opinions)
             })
+        })
+        break
+
+    case 'contact':
+        const transporter = nodemailer.createTransport({
+            host: EMAIL_SMTP,
+            port: EMAIL_PORT,
+            secure: false,
+            auth: {
+                user: EMAIL_USER,
+                pass: EMAIL_PASS
+            }
+        })
+
+        await transporter.sendMail({
+            from: `"${req.body.name}" <${req.body.email}`,
+            to: 'octoturge@octo-3d.tech',
+            subject: `Contact ${(new Date).toISOString()}`,
+            text: req.body.message,
+            html: `<address>${req.body.name}<br />Email address: ${req.body.email}<br />Phone number: ${req.body.phone}</address>`
         })
         break
 

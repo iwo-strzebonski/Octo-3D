@@ -12,6 +12,7 @@ use('octo-3d')
 db.getCollection('opinions').insertMany([
     { 
         'order': '6f5ef051-448a-4500-965d-6f8290f35a36',
+        'title': 'Sam Assistant Cookie Cutter',
         'score': 4.5,
         'opinion': 'The quality of the print is surprisingly very well.\nMaterial is very durable, what makes the print practical',
         'images': [
