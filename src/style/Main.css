@@ -11,6 +11,23 @@
     margin: 0.25rem 0.5rem;
 }
 
+.widget-container {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.widget-svg {
+    filter: drop-shadow(0 0 0.5rem rgba(0, 0, 0, 0.75))
+}
+
+.widget-svg path {
+    fill: gray !important;
+}
+
+.widget-selected path {
+    fill: gold !important;
+}
+
 .contact-form,
 .buy-form {
     display: flex;

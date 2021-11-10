@@ -64,7 +64,7 @@ export default class Pricing extends React.Component {
         data.append('quality', this.state.quality)
         this.setState({isSlicePending: true})
         axios
-            .post(this.api + 'slice', data, {})
+            .post(this.api + 'slice', data)
             .then(result => {
                 this.setState({
                     isSlicePending: false,
