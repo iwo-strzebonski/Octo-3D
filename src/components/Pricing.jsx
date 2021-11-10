@@ -120,6 +120,7 @@ export default class Pricing extends React.Component {
                             color={this.state.color}
                             quality={this.state.quality}
                             price={this.state.price}
+                            file={this.state.file}
                         /> 
                     </div>
                     : null

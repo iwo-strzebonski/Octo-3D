@@ -19,7 +19,7 @@ export default class Gallery extends React.Component {
             .then(result => this.setState({
                 opinions: result.data
             }))
-            .catch(() => console.log('Connection error'))
+            .catch(() => console.error('Connection error'))
     }
 
     render() {

@@ -23,6 +23,7 @@ export default class RequestPriceForm extends React.Component {
         return (
             <form
                 className='pricing-form'
+                method='POST'
                 onSubmit={e => this.props.sendFile(e)}
                 encType='multipart/form-data'
                 onChange={() => this.props.changeState({ price: 0 })}

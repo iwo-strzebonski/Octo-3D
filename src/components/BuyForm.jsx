@@ -1,12 +1,15 @@
 import React from 'react'
+import PhoneInput from 'react-phone-number-input'
+import axios from 'axios'
 
 import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
 
 export default class BuyForm extends React.Component {
     constructor(props) {
         super(props)
         this.props = props
+
+        this.api = window.location.origin + '/api/'
     }
 
     getCookie(cName) {
@@ -22,12 +25,34 @@ export default class BuyForm extends React.Component {
         return res
     }
 
+    submitForm(e) {
+        e.preventDefault()
+        const data = new FormData() 
+        data.append('stl', this.props.file)
+        data.append('material', this.props.material)
+        data.append('color', this.props.color)
+        data.append('quality', this.props.quality)
+        data.append('price', this.props.price.global)
+        data.append('name', this.state.name)
+        data.append('email', this.state.email)
+        data.append('phone', this.state.phone)
+        data.append('street', this.state.street)
+        data.append('city', this.state.city)
+        data.append('state', this.state.state)
+        data.append('country', this.state.country)
+        data.append('postal', this.state.postal)
+        axios
+            .post(this.api + 'printing', data)
+            .catch(() => console.error('Connection error'))
+    }
+
     render() {
         return (
             <form
                 className='buy-form'
                 method='POST'
-                onSubmit={(e) => {e.preventDefault()}}      // TODO: Form submitting
+                onSubmit={e => this.submitForm(e)}
+                encType='multipart/form-data'
             >
                 <h3>{this.props.price.local !== this.props.price.global
                     ? `${this.props.price.local.toFixed(2)} ${this.getCookie('CLIENT_CURRENCY')} ≈ ${this.props.price.global.toFixed(2)} USD`
@@ -56,28 +81,38 @@ export default class BuyForm extends React.Component {
                     required={true}
                 />
                 <textarea
-                    name='address'
+                    name='street'
                     rows={2}
                     cols={24}
-                    onChange={e => this.setState({message: e.target.value})}
+                    onChange={e => this.setState({street: e.target.value})}
                     placeholder='Your street address...'
                     required={true}
                 ></textarea>
                 <input
                     type='text'
                     name='city'
+                    onChange={e => this.setState({city: e.target.value})}
+                    placeholder='Your city...'
+                    required={true}
+                />
+                <input
+                    type='text'
+                    name='country'
+                    onChange={e => this.setState({country: e.target.value})}
                     placeholder='Your country...'
                     required={true}
                 />
                 <input
                     type='text'
                     name='state'
+                    onChange={e => this.setState({state: e.target.value})}
                     placeholder='Your state...'
                     required={false}
                 />
                 <input
                     type='text'
                     name='postal'
+                    onChange={e => this.setState({postal: e.target.value})}
                     placeholder='Your postal/ZIP Code...'
                     required={true}
                 />
