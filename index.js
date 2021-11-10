@@ -97,13 +97,21 @@ app.post('/api/:site', async(req, res) => {
             }
         })
 
+        transporter.verify(function (error, success) {
+            if (error) {
+                console.log(error)
+            } else {
+                console.log("Server is ready to take our messages")
+            }
+        })
+
         await transporter.sendMail({
             from: `"${req.body.name}" <${req.body.email}`,
             to: 'octoturge@octo-3d.tech',
             subject: `Contact ${(new Date).toISOString()}`,
             text: req.body.message,
             html: `<address>${req.body.name}<br />Email address: ${req.body.email}<br />Phone number: ${req.body.phone}</address>`
-        })
+        }).catch(e => console.log(e))
         break
 
     case 'location':
