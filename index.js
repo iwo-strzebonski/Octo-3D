@@ -34,23 +34,6 @@ const EMAIL_PASS = process.env.EMAIL_PASS
 const uri = `mongodb+srv://octoturge:${PASSWORD}@${CLUSTER}/${DATABASE}?retryWrites=true&w=majority`
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
-const transporter = nodemailer.createTransport({
-    host: EMAIL_SMTP,
-    port: EMAIL_PORT,
-    secure: false,
-    auth: {
-        user: EMAIL_USER,
-        pass: EMAIL_PASS
-    },
-    tls: {
-        rejectUnauthorized: false,
-        secure: false,
-        ignoreTLS: true,
-        minVersion: 'TLSv1'
-    }
-})
-
-
 const app = express()
 
 app.set('trust proxy', true)
@@ -104,6 +87,22 @@ app.post('/api/:site', async(req, res) => {
         break
 
     case 'contact':
+        const transporter = nodemailer.createTransport({
+            host: EMAIL_SMTP,
+            port: EMAIL_PORT,
+            secure: false,
+            auth: {
+                user: EMAIL_USER,
+                pass: EMAIL_PASS
+            },
+            tls: {
+                rejectUnauthorized: false,
+                secure: false,
+                ignoreTLS: true,
+                minVersion: 'TLSv1'
+            }
+        })
+
         await transporter.sendMail({
             from: `"${req.body.name}" <noreply@octo-3d.tech>`,
             to: 'octoturge@octo-3d.tech',
@@ -120,6 +119,22 @@ app.post('/api/:site', async(req, res) => {
         break
 
     case 'printing':
+        const transporter = nodemailer.createTransport({
+            host: EMAIL_SMTP,
+            port: EMAIL_PORT,
+            secure: false,
+            auth: {
+                user: EMAIL_USER,
+                pass: EMAIL_PASS
+            },
+            tls: {
+                rejectUnauthorized: false,
+                secure: false,
+                ignoreTLS: true,
+                minVersion: 'TLSv1'
+            }
+        })
+
         const fileName = `${req.files.upload.name}-${Date.now().toString()}.stl`
         await req.files.stl.mv('./tmp/' + fileName)
         const file = fs.readFileSync('./tmp/' + fileName).buffer
