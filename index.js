@@ -204,10 +204,27 @@ app.post('/api/:site', async(req, res) => {
                     key: 'wall_thickness',
                     value: 0.1
                 }
+                {
+                    key: 'machine_nozzle_size',
+                    value: 0.2
+                },
+                {
+                    key: 'line_width',
+                    value: 0.2
+                },
+                {
+                    key: 'wall_line_width',
+                    value: 0.2
+                },
+                {
+                    key: 'speed_print',
+                    value: 40
+                }
             ],
             */
+            
             transfer: true,
-            // verbose: true
+            verbose: false
         })
 
         // slicer.on('progress', percent => {
@@ -278,9 +295,11 @@ async function calcPrice(
     switch (quality) {
         case 'high':
             qualityMultiplier += 0.5    // +50%
+            printTime *= 2
             break
         case 'low':
             qualityMultiplier -= 0.25   // -25%
+            printTime /= 2
             break
     }
 
