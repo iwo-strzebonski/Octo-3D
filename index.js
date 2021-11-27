@@ -288,7 +288,7 @@ async function calcPrice(
     const handlingFee = 1               // 1 EUR
     const electricityCost = 0.2         // EUR/kWh
     const powerConsumption = 100        // W
-    const failRate = 1.5                // 20%
+    const failRate = 1.2                // 20%
     const margin = 2                    // +100%
     let qualityMultiplier = 1           // 100%
 
