@@ -43,6 +43,7 @@
         "immer": "^9.0.6",
         "react-router": "^6.0.0",
         "react-router-dom": "^6.0.0",
-        "set-value": "^4.1.0"
+        "set-value": "^4.1.0",
+        "follow-redirects": ">=1.14.7"
     }
 }
